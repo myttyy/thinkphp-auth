@@ -152,13 +152,14 @@ class Auth
         $groups[$uid] = $user_groups ?: [];
         return $groups[$uid];
     }
+
     /**
      * 获得权限列表
      * @param integer $uid 用户id
      * @param integer $type
      * @return array
      */
-    protected function getAuthList($uid, $type)
+    protected function getAuthList(int $uid, int $type):array
     {
         static $_authList = []; //保存用户验证通过的权限列表
         $t = implode(',', (array)$type);
@@ -214,7 +215,7 @@ class Auth
     /**
      * 获得用户资料,根据自己的情况读取数据库
      */
-    protected function getUserInfo($uid):array
+    protected function getUserInfo(int $uid):array
     {
         static $userinfo = [];
         $user = $this->db->name($this->config['auth_user']);
