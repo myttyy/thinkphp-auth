@@ -3,7 +3,8 @@
     "description": "适用于thinkPHP框架的权限认证库,mAuthentication Library for ThinkPHP Framework",
 	"keywords": ["ThinkPHP", "auth", "user"],
     "license": "Apache-2.0",
-    "version": "1.0.0",
+    "minimum-stability": "stable",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "myttyy",
