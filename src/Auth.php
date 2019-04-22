@@ -20,12 +20,6 @@ class Auth
      */
     private $request;
 
-     /**
-     * 数据库连接实例
-     * @var Request
-     */
-    private $db;
-
     /**
      * 默认配置
      * 优先级低于 config/auth.php
@@ -51,9 +45,6 @@ class Auth
         }
         // 初始化request
         $this->request = new Request();
-
-        // 初始化Db
-        $this->db = new Db();
     }
 
     /**
@@ -145,7 +136,7 @@ class Auth
         $auth_group_access = Loader::parseName($this->config['auth_group_access'], $type);
         $auth_group = Loader::parseName($this->config['auth_group'], $type);
         // 执行查询
-        $user_groups = $this->db->view($auth_group_access, 'uid,group_id')
+        $user_groups = Db::view($auth_group_access, 'uid,group_id')
             ->view($auth_group, 'title,rules', "{$auth_group_access}.group_id={$auth_group}.id", 'LEFT')
             ->where("{$auth_group_access}.uid='{$uid}' and {$auth_group}.status='1'")
             ->select();
@@ -186,7 +177,7 @@ class Auth
             'status' => 1,
         );
         //读取用户组所有权限规则
-        $rules = $this->db->name($this->config['auth_rule'])->where($map)->field('condition,name')->select();
+        $rules = Db::name($this->config['auth_rule'])->where($map)->field('condition,name')->select();
         //循环规则，判断结果。
         $authList = []; //
         foreach ($rules as $rule) {
