@@ -2,10 +2,10 @@
 namespace myttyy;
 
 use think\Db;
+use think\Loader;
 use think\facade\Config;
 use think\facade\Session;
 use think\facade\Request;
-use think\Loader;
 
 class Auth
 {
@@ -13,12 +13,6 @@ class Auth
     * @var object 对象实例
     */
     protected static $instance;
-
-    /**
-     * 当前请求实例
-     * @var Request
-     */
-    private $request;
 
     /**
      * 默认配置
@@ -43,8 +37,6 @@ class Auth
         if ($auth = Config::get('auth')) {
             $this->config = array_merge($this->config, $auth);
         }
-        // 初始化request
-        $this->request = new Request();
     }
 
     /**
@@ -70,7 +62,7 @@ class Auth
      * @param string $mode 执行check的模式
      * @return bool  通过验证返回true;失败返回false
      */
-    public function check($name,int $uid,string $relation = 'or', int $type = 1, $mode = 'url'):boolval
+    public function check($name,int $uid,string $relation = 'or', int $type = 1, $mode = 'url'):bool
     {
         if (!$this->config['auth_on']) {
             return true;
@@ -87,7 +79,7 @@ class Auth
         }
         $list = []; //保存验证通过的规则名
         if ('url' == $mode) {
-            $REQUEST = unserialize(strtolower(serialize($this->request->param())));
+            $REQUEST = unserialize(strtolower(serialize(Request::param())));
         }
         foreach ($authList as $auth) {
             $query = preg_replace('/^.+\?/U', '', $auth);
