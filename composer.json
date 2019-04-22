@@ -2,7 +2,7 @@
     "name": "myttyy/thinkphp-auth",
     "description": "适用于thinkPHP框架的权限认证库,mAuthentication Library for ThinkPHP Framework",
 	"keywords": ["ThinkPHP", "auth", "user"],
-    "license": "Apache2.0",
+    "license": "Apache-2.0",
     "type": "composer-plugin",
     "minimum-stability": "stable",
     "version": "1.0.0",
