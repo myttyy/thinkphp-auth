@@ -79,7 +79,7 @@ class Auth
      * @param string $mode 执行check的模式
      * @return bool  通过验证返回true;失败返回false
      */
-    public function check(object $name,int $uid,string $relation = 'or', int $type = 1, $mode = 'url'):boolval
+    public function check($name,int $uid,string $relation = 'or', int $type = 1, $mode = 'url'):boolval
     {
         if (!$this->config['auth_on']) {
             return true;
