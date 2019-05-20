@@ -1,4 +1,8 @@
-### Thinkphp5 Auth权限认证类
+### Thinkphp Auth权限认证类
+
+2019年5月20日 17:10:54
+
+- Thinkphp6.0请使用最新版2.*版
 
 ```
  "require": {
