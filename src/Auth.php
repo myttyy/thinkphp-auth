@@ -2,16 +2,15 @@
 namespace myttyy;
 
 use think\Db;
-use think\Loader;
 use think\facade\Config;
-use think\facade\Session;
 use think\facade\Request;
+use think\facade\Session;
 
 class Auth
 {
     /**
-    * @var object 对象实例
-    */
+     * @var object 对象实例
+     */
     protected static $instance;
 
     /**
@@ -45,7 +44,7 @@ class Auth
      * @param array $options 参数
      * @return \think\Request
      */
-    public static function instance(array $options = []):Auth
+    public static function instance(array $options = []): Auth
     {
         if (is_null(self::$instance)) {
             self::$instance = new static($options);
@@ -62,7 +61,7 @@ class Auth
      * @param string $mode 执行check的模式
      * @return bool  通过验证返回true;失败返回false
      */
-    public function check($name,int $uid,string $relation = 'or', int $type = 1, $mode = 'url'):bool
+    public function check($name, int $uid, string $relation = 'or', int $type = 1, $mode = 'url'): bool
     {
         if (!$this->config['auth_on']) {
             return true;
@@ -117,7 +116,7 @@ class Auth
      *     array('uid'=>'用户id','group_id'=>'用户组id','title'=>'用户组名称','rules'=>'用户组拥有的规则id,多个,号隔开'),
      *     ...)
      */
-    public function getGroups(int $uid):array
+    public function getGroups(int $uid): array
     {
         static $groups = [];
         if (isset($groups[$uid])) {
@@ -125,8 +124,8 @@ class Auth
         }
         // 转换表名
         $type = Config::get('database.prefix') ? 1 : 0;
-        $auth_group_access = Loader::parseName($this->config['auth_group_access'], $type);
-        $auth_group = Loader::parseName($this->config['auth_group'], $type);
+        $auth_group_access = parse_name($this->config['auth_group_access'], $type);
+        $auth_group = parse_name($this->config['auth_group'], $type);
         // 执行查询
         $user_groups = Db::view($auth_group_access, 'uid,group_id')
             ->view($auth_group, 'title,rules', "{$auth_group_access}.group_id={$auth_group}.id", 'LEFT')
@@ -142,10 +141,10 @@ class Auth
      * @param integer $type
      * @return array
      */
-    protected function getAuthList(int $uid, int $type):array
+    protected function getAuthList(int $uid, int $type): array
     {
         static $_authList = []; //保存用户验证通过的权限列表
-        $t = implode(',', (array)$type);
+        $t = implode(',', (array) $type);
         if (isset($_authList[$uid . $t])) {
             return $_authList[$uid . $t];
         }
@@ -198,7 +197,7 @@ class Auth
     /**
      * 获得用户资料,根据自己的情况读取数据库
      */
-    protected function getUserInfo(int $uid):array
+    protected function getUserInfo(int $uid): array
     {
         static $userinfo = [];
         $user = $this->db->name($this->config['auth_user']);
